@@ -1,66 +1,70 @@
 # <a name="main"></a>C++ Core Guidelines
 
-April 13, 2023
+13 квітеня 2023
 
-Editors:
+Редактори:
 
 * [Bjarne Stroustrup](http://www.stroustrup.com)
 * [Herb Sutter](http://herbsutter.com/)
 
-This is a living document under continuous improvement.
-Had it been an open-source (code) project, this would have been release 0.8.
-Copying, use, modification, and creation of derivative works from this project is licensed under an MIT-style license.
-Contributing to this project requires agreeing to a Contributor License. See the accompanying [LICENSE](LICENSE) file for details.
-We make this project available to "friendly users" to use, copy, modify, and derive from, hoping for constructive input.
+Переклад:
 
-Comments and suggestions for improvements are most welcome.
-We plan to modify and extend this document as our understanding improves and the language and the set of available libraries improve.
-When commenting, please note [the introduction](#S-introduction) that outlines our aims and general approach.
-The list of contributors is [here](#SS-ack).
+* [Вялков Дмитро]
 
-Problems:
+Це живий документ, який постійно вдосконалюється.
+Якби це був проект з відкритим вихідним кодом, це була б версія 0.8.
+Копіювання, використання, модифікація та створення похідних робіт на основі цього проекту ліцензовано за ліцензією MIT.
+Для участі у цьому проекті потрібно погодитися з Ліцензією учасника. Дивіться супровідний файл [ЛІЦЕНЗІЯ](LICENSE) для отримання детальної інформації.
+Ми робимо цей проект доступним для "дружніх користувачів" для використання, копіювання, модифікації та похідних, сподіваючись на конструктивний внесок.
 
-* The sets of rules have not been completely checked for completeness, consistency, or enforceability.
-* Triple question marks (???) mark known missing information
-* Update reference sections; many pre-C++11 sources are too old.
-* For a more-or-less up-to-date to-do list see: [To-do: Unclassified proto-rules](#S-unclassified)
+Зауваження та пропозиції щодо покращення вітаються.
+Ми плануємо змінювати і розширювати цей документ у міру того, як покращуватиметься наше розуміння, вдосконалюватиметься мова і набір доступних бібліотек.
+Коментуючи, будь ласка, зверніть увагу на [вступ](#S-introduction), який описує наші цілі та загальний підхід.
+Список дописувачів знаходиться [тут](#SS-ack).
 
-You can [read an explanation of the scope and structure of this Guide](#S-abstract) or just jump straight in:
+Проблемні моменти:
 
-* [In: Introduction](#S-introduction)
-* [P: Philosophy](#S-philosophy)
-* [I: Interfaces](#S-interfaces)
-* [F: Functions](#S-functions)
-* [C: Classes and class hierarchies](#S-class)
-* [Enum: Enumerations](#S-enum)
-* [R: Resource management](#S-resource)
-* [ES: Expressions and statements](#S-expr)
-* [Per: Performance](#S-performance)
-* [CP: Concurrency and parallelism](#S-concurrency)
-* [E: Error handling](#S-errors)
-* [Con: Constants and immutability](#S-const)
-* [T: Templates and generic programming](#S-templates)
-* [CPL: C-style programming](#S-cpl)
-* [SF: Source files](#S-source)
-* [SL: The Standard Library](#sl-the-standard-library)
+* Набори правил не були повністю перевірені на повноту, узгодженість або можливість виконання.
+* Потрійні знаки питання (???) позначають відому відсутню інформацію.
+* Оновлені розділи довідкової інформації; багато джерел до C++11 є надто старими.
+* Більш-менш актуальний список справ див: [To-do: Некласифіковані прото-правила] (#S-unclassified)
 
-Supporting sections:
+Ви можете [прочитати пояснення щодо обсягу та структури цього Посібника](#S-abstract) або одразу перейти до нього:
 
-* [A: Architectural ideas](#S-A)
-* [NR: Non-Rules and myths](#S-not)
-* [RF: References](#S-references)
-* [Pro: Profiles](#S-profile)
-* [GSL: Guidelines support library](#gsl-guidelines-support-library)
-* [NL: Naming and layout suggestions](#S-naming)
-* [FAQ: Answers to frequently asked questions](#S-faq)
-* [Appendix A: Libraries](#S-libraries)
-* [Appendix B: Modernizing code](#S-modernizing)
-* [Appendix C: Discussion](#S-discussion)
-* [Appendix D: Supporting tools](#S-tools)
-* [Glossary](#S-glossary)
-* [To-do: Unclassified proto-rules](#S-unclassified)
+* [In: Вступ](#S-introduction)
+* [P: Філософія](#S-philosophy)
+* [I: Інтерфейси](#S-interfaces)
+* [F: Функції](#S-functions)
+* [C: Класи та іїрархія класів](#S-class)
+* [Enum: Перерахування](#S-enum)
+* [R: Керування ресурсами](#S-resource)
+* [ES: Вирази та твердження](#S-expr)
+* [Per: Продуктивність](#S-performance)
+* [CP: Конкуренція і паралелізм](#S-concurrency)
+* [E: Обробка помилок](#S-errors)
+* [Con: Константи та незмінність](#S-const)
+* [T: Шаблони та загальне програмування](#S-templates)
+* [CPL: Програмування в стилі C](#S-cpl)
+* [SF: Файли з вихідним кодом](#S-source)
+* [SL: Стандартна бібліотека](#sl-the-standard-library)
 
-You can sample rules for specific language features:
+Допоміжні секції:
+
+* [A: Архітектурні ідеї](#S-A)
+* [NR: Неправила та міфи](#S-not)
+* [RF: Посилання](#S-references)
+* [Pro: Профілі](#S-profile)
+* [GSL: Бібліотека підтримки рекомендацій](#gsl-guidelines-support-library)
+* [NL: Пропозиції щодо назви та макета](#S-naming)
+* [FAQ: Відповіді на поширені запитання](#S-faq)
+* [Додаток A: Бібліотеки](#S-libraries)
+* [Додаток B: Модернізація коду](#S-modernizing)
+* [Додаток C: Обговорення](#S-discussion)
+* [Додаток D: Допоміжні інструменти](#S-tools)
+* [Глосарій](#S-glossary)
+* [To-do: Некласифіковані прото-правила](#S-unclassified)
+
+Ви можете переглянути приклади правил для певних мовних особливостей:
 
 * assignment:
 [regular types](#Rc-regular) --
@@ -169,7 +173,7 @@ You can sample rules for specific language features:
 [destructor](#Rc-dtor-virtual) --
 [never fail](#Rc-dtor-fail)
 
-You can look at design concepts used to express the rules:
+Ви можете подивитися на концепції дизайну, які використовуються для вираження правил:
 
 * assertion: ???
 * error: ???
@@ -182,7 +186,7 @@ You can look at design concepts used to express the rules:
 * postcondition: ???
 * resource: ???
 
-# <a name="S-abstract"></a>Abstract
+# <a name="S-abstract"></a>Анотація
 
 This document is a set of guidelines for using C++ well.
 The aim of this document is to help people to use modern C++ effectively.
